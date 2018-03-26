@@ -7,7 +7,7 @@ server:
 jdbc:
   datasource:
     name: test
-    url: jdbc:mysql://172.17.244.173:3366/oep_cms?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false
+    url: jdbc:mysql://39.106.190.46:3366/oep_cms?characterEncoding=utf8&useSSL=false&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false
     username: root
     password: 2<dM>=y27Pk.S9
     # 使用druid数据源
@@ -43,7 +43,7 @@ spring:
     timeout: 3000
     port: 3379
     password: 1Lu.8x5YRJ
-    host: 172.17.244.173
+    host: 39.106.190.46
     database: 5 
     pool:
       max-wait: 1000
