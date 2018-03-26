@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.ReadSentenceMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ReadSentence" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="article_id" property="articleId" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="sentence_cont" property="sentenceCont" jdbcType="VARCHAR" />
+    <result column="sentence_mean" property="sentenceMean" jdbcType="VARCHAR" />
+    <result column="word_num" property="wordNum" jdbcType="INTEGER" />
+    <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    <result column="audio_path" property="audioPath" jdbcType="VARCHAR" />
+    <result column="order_num" property="orderNum" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, article_id, name, sentence_cont, sentence_mean, word_num, picture_path, audio_path, 
+    order_num, create_id, create_date, update_id, update_date, enable_flag
+  </sql>
+  <sql id="Base_Column_List_As" >
+    t.id, t.article_id, t.name, t.sentence_cont, t.sentence_mean, t.word_num, t.picture_path, t.audio_path, 
+    t.order_num, t.create_id, t.create_date, t.update_id, t.update_date, t.enable_flag
+  </sql>
+  
+  <!-- 批量插入 -->
+  	<insert id="insertBatch" parameterType="java.util.List">
+  		 insert into cms_read_sentence (article_id, name, 
+	      sentence_cont, sentence_mean, word_num, 
+	      picture_path, audio_path, order_num, 
+	      create_id, create_date, update_id, 
+	      update_date, enable_flag) values
+        <foreach collection="list" item="item" index="index" separator=",">
+       	(     
+       	#{item.articleId,jdbcType=BIGINT}, #{item.name,jdbcType=VARCHAR}, 
+        #{item.sentenceCont,jdbcType=VARCHAR}, #{item.sentenceMean,jdbcType=VARCHAR}, #{item.wordNum,jdbcType=INTEGER}, 
+        #{item.picturePath,jdbcType=VARCHAR}, #{item.audioPath,jdbcType=VARCHAR}, #{item.orderNum,jdbcType=INTEGER}, 
+        #{item.createId,jdbcType=VARCHAR}, #{item.createDate,jdbcType=DATE}, #{item.updateId,jdbcType=VARCHAR}, 
+        #{item.updateDate,jdbcType=DATE}, #{item.enableFlag,jdbcType=VARCHAR}
+      	)
+        </foreach>
+	</insert>
+  
+  <!-- 查询分页 -->
+  <select id="getEntityByPage" parameterType="com.xuanli.oepcms.entity.ReadSentence" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    	
+    from cms_read_sentence t
+    
+    
+    where 
+    	t.enable_flag='T' 
+      <if test="id != null">
+        and t.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="articleId != null">
+        and t.article_id = #{articleId,jdbcType=VARCHAR}
+      </if>
+      
+      order by t.order_num
+      
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_read_sentence
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_read_sentence
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.ReadSentence" >
+    insert into cms_read_sentence (id, article_id, name, 
+      sentence_cont, sentence_mean, word_num, 
+      picture_path, audio_path, order_num, 
+      create_id, create_date, update_id, 
+      update_date, enable_flag)
+    values (#{id,jdbcType=BIGINT}, #{articleId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, 
+      #{sentenceCont,jdbcType=VARCHAR}, #{sentenceMean,jdbcType=VARCHAR}, #{wordNum,jdbcType=INTEGER}, 
+      #{picturePath,jdbcType=VARCHAR}, #{audioPath,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=DATE}, #{enableFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.ReadSentence" >
+    insert into cms_read_sentence
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="articleId != null" >
+        article_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="sentenceCont != null" >
+        sentence_cont,
+      </if>
+      <if test="sentenceMean != null" >
+        sentence_mean,
+      </if>
+      <if test="wordNum != null" >
+        word_num,
+      </if>
+      <if test="picturePath != null" >
+        picture_path,
+      </if>
+      <if test="audioPath != null" >
+        audio_path,
+      </if>
+      <if test="orderNum != null" >
+        order_num,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="articleId != null" >
+        #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sentenceCont != null" >
+        #{sentenceCont,jdbcType=VARCHAR},
+      </if>
+      <if test="sentenceMean != null" >
+        #{sentenceMean,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNum != null" >
+        #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null" >
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null" >
+        #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null" >
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.ReadSentence" >
+    update cms_read_sentence
+    <set >
+      <if test="articleId != null" >
+        article_id = #{articleId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sentenceCont != null" >
+        sentence_cont = #{sentenceCont,jdbcType=VARCHAR},
+      </if>
+      <if test="sentenceMean != null" >
+        sentence_mean = #{sentenceMean,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNum != null" >
+        word_num = #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPath != null" >
+        audio_path = #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null" >
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.ReadSentence" >
+    update cms_read_sentence
+    set article_id = #{articleId,jdbcType=BIGINT},
+      name = #{name,jdbcType=VARCHAR},
+      sentence_cont = #{sentenceCont,jdbcType=VARCHAR},
+      sentence_mean = #{sentenceMean,jdbcType=VARCHAR},
+      word_num = #{wordNum,jdbcType=INTEGER},
+      picture_path = #{picturePath,jdbcType=VARCHAR},
+      audio_path = #{audioPath,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

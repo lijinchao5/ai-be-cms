@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.DicEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.DicEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, type, type_name
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_dic
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteById" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    delete from cms_dic
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insertDicEntity" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    insert into cms_dic
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="typeName != null" >
+        type_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        #{typeName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    update cms_dic
+    <set >
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="typeName != null" >
+        type_name = #{typeName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="findByPageTotal" resultType="java.lang.Integer" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    select 
+    	count(*)
+    from cms_dic
+    where 1=1
+    <if test="typeName != null" >
+       and type_name like '%${typeName}%'
+    </if>
+    <if test="type != null and type!=''" >
+       and type = #{type,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+    <select id="findByPage" resultType="com.xuanli.oepcms.entity.DicEntity" parameterType="com.xuanli.oepcms.entity.DicEntity" >
+    select 
+    	id,type,type_name as typeName
+    from cms_dic
+    where 1=1
+    <if test="typeName != null" >
+       and type_name like '%${typeName}%'
+    </if>
+    <if test="type != null and type!=''" >
+      and  type = #{type,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+</mapper>

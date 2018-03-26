@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.ClasEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ClasEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="clas_id" property="clasId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    <result column="grade" property="grade" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, clas_id, name, school_id, create_id, create_date, update_id, update_date, enable_flag,grade
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_clas
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectClasEntity" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.ClasEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_clas
+    where enable_flag='T'
+      <if test="clasId != null" >
+        and clas_id = #{clasId,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <delete id="deleteById" parameterType="java.lang.Long" >
+    delete from xl_clas
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertClasEntity" parameterType="com.xuanli.oepcms.entity.ClasEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into xl_clas
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="clasId != null" >
+        clas_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="schoolId != null" >
+        school_id,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="clasId != null" >
+        #{clasId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        #{grade,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateById" parameterType="com.xuanli.oepcms.entity.ClasEntity" >
+    update xl_clas
+    <set >
+      <if test="clasId != null" >
+        clas_id = #{clasId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateClas" parameterType="java.lang.Long" >
+    update xl_clas
+    set create_id = null
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  
+   <select id="findClasByPageTotal" resultType="java.lang.Integer" parameterType="com.xuanli.oepcms.entity.ClasEntity" >
+    select 
+    	count(id)
+    from xl_clas
+    where 
+    	enable_flag='T'
+    <if test="createId != null" >
+        and create_id = #{createId,jdbcType=VARCHAR}
+    </if>
+  </select>
+  
+  <select id="findClasByPage" resultType="com.xuanli.oepcms.entity.ClasEntity" parameterType="com.xuanli.oepcms.entity.ClasEntity" >
+    select
+    	id, clas_id clasId,
+    	name, school_id schoolid, 
+    	create_id create_id, 
+    	create_date createdate, 
+    	update_id updateid, 
+    	update_date updatedate, 
+    	enable_flag enableflag,
+    	grade,
+   		(
+			SELECT
+				count(id)
+			FROM
+				xl_user u
+			WHERE
+				u.id IN (
+					SELECT
+						uc.id
+					FROM
+						xl_user_clas uc
+					WHERE
+						uc.clas_id = c.id
+				)
+			AND u.update_date IS NOT NULL
+		) totalStudent,
+		(
+			SELECT
+				count(h.id)
+			FROM
+				xl_homework h
+			WHERE
+				h.clas_id = c.id
+		) totalHomework,
+		(
+			SELECT
+				count(u.id)
+			FROM
+				xl_user u
+			LEFT JOIN xl_user_clas uc ON uc.user_id = u.id
+			WHERE
+				u.name_num IS NOT NULL
+			AND uc.clas_id = c.id
+		) canBatch
+    from xl_clas c
+    where 
+    	c.enable_flag='T'
+    <if test="createId != null" >
+        and c.create_id = #{createId,jdbcType=VARCHAR}
+    </if>
+    order by c.id desc 
+	limit #{start},#{end}
+  </select>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+</mapper>

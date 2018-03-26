@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>CMS内容管理系统</title>
+<link rel="stylesheet" href="../../layui/css/layui.css">
+<link rel="stylesheet" href="../../css/common.css">
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/util.js"></script>
+<script src="./js/bookinfo.js"></script>
+<style type="text/css">
+	.layui-elem-field .layui-btn {
+    margin: 0 7px 10px 0;
+    white-space: normal;
+    text-align: left;
+    height: auto;
+	}
+	.book-cont {
+		margin: 20px 30px 10px;
+	}
+</style>
+</head>
+<body>
+<div id="audiodiv" style="display: none;">
+		<audio id="audio" src=""  controls="controls" preload="auto" >  
+            你的浏览器不支持video元素  
+    </audio> 
+</div>
+	<!--展示面板-->
+<div id="maincollapse" class="layui-collapse" lay-accordion="">
+<div class="layui-colla-item" domid="{domid}">
+	<h2 class="layui-colla-title">加载中</h2>
+	<div class="layui-colla-content">
+	</div>
+</div>
+</div>
+</body>
+<!--折叠模板-->
+<script type="text/html" id="item">
+<div class="layui-colla-item {class}" domid="{domid}">
+	<h2 class="layui-colla-title">{title}</h2>
+	<div class="layui-colla-content">
+		{content}
+	</div>
+</div>
+</script>
+<!--小节内容模板-->
+<script type="text/html" id="section">
+<fieldset class="layui-elem-field ">
+  <legend style="font-size: 14px;">单词</legend>
+  <div class="book-cont type1 " domid="{domid}">
+  </div>
+</fieldset>
+<fieldset class="layui-elem-field ">
+  <legend style="font-size: 14px;">句子</legend>
+  <div class="book-cont type3 " domid="{domid}">
+  </div>
+</fieldset>
+<fieldset class="layui-elem-field ">
+  <legend style="font-size: 14px;">对话</legend>
+  <div class="book-cont type4 " domid="{domid}">
+  </div>
+</fieldset>
+</script>
+<!--内容模板-->
+<script type="text/html" id="detail">
+<button class="layui-btn layui-btn-primary layui-btn-sm {class}" data-id="{id}" audioPath="{audioPath}"
+	 mAudioPath="{mAudioPath}" wAudioPath="{wAudioPath}" picturePath="{picturePath}" >
+	{content}
+</button>
+{space}
+</script>
+</html>

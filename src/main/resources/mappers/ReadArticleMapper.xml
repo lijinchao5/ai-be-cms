@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.ReadArticleMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.ReadArticle" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="word_num" property="wordNum" jdbcType="INTEGER" />
+    <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="level" property="level" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    
+    <result column="typeName" property="typeName" jdbcType="VARCHAR" />
+    <result column="levelName" property="levelName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, word_num, picture_path, type, level, create_id, create_date, update_id, 
+    update_date, enable_flag
+  </sql>
+  <sql id="Base_Column_List_As" >
+    t.id, t.name, t.word_num, t.picture_path, t.type, t.level, t.create_id, t.create_date, t.update_id, 
+    t.update_date, t.enable_flag
+  </sql>
+  
+  <!-- 查询分页 -->
+  <select id="getEntityByPage" parameterType="com.xuanli.oepcms.entity.ReadArticle" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    	,cde1.name as typeName 
+    	,cde2.name as levelName 
+    	
+    from cms_read_article t
+    left join cms_dic_detail cde1 on cde1.name_val = t.type and cde1.enable_flag='T' and cde1.dic_id in(select id from cms_dic where type='ydfl')
+    left join cms_dic_detail cde2 on cde2.name_val = t.level and cde2.enable_flag='T' and cde2.dic_id in(select id from cms_dic where type='ydjb')
+    
+    
+    where 
+    	1 = 1 
+      <if test="id != null">
+        and t.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="name != null">
+        and t.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="type != null">
+        and t.type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="level != null">
+        and t.level = #{level,jdbcType=VARCHAR}
+      </if>
+      <if test="enableFlag == null">
+        and t.enable_flag='T'
+      </if>
+      <if test="enableFlag != null and 'all' != enableFlag">
+        and t.enable_flag = #{enableFlag,jdbcType=VARCHAR}
+      </if>
+      
+      <!-- order by t.word_spell,t.type -->
+      
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_read_article
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_read_article
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.ReadArticle" >
+    insert into cms_read_article (id, name, word_num, 
+      picture_path, type, level, 
+      create_id, create_date, update_id, 
+      update_date, enable_flag)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{wordNum,jdbcType=INTEGER}, 
+      #{picturePath,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{level,jdbcType=VARCHAR}, 
+      #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{updateId,jdbcType=VARCHAR}, 
+      #{updateDate,jdbcType=DATE}, #{enableFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.ReadArticle" useGeneratedKeys="true" keyProperty="id">
+    insert into cms_read_article
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="wordNum != null" >
+        word_num,
+      </if>
+      <if test="picturePath != null" >
+        picture_path,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="level != null" >
+        level,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNum != null" >
+        #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null" >
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.ReadArticle" >
+    update cms_read_article
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="wordNum != null" >
+        word_num = #{wordNum,jdbcType=INTEGER},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null" >
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.ReadArticle" >
+    update cms_read_article
+    set name = #{name,jdbcType=VARCHAR},
+      word_num = #{wordNum,jdbcType=INTEGER},
+      picture_path = #{picturePath,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      level = #{level,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

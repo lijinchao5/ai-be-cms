@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+		<title>CMS内容管理系统</title>
+		<link rel="stylesheet" href="../../layui/css/layui.css">
+		<link rel="stylesheet" href="../../css/common.css">
+		<script src="../../layui/layui.js"></script>
+		<script src="../../js/jquery.min.js"></script>
+		<script src="../../js/util.js"></script>
+		<script src="./js/type1.js"></script>
+		<style>
+			.oper-bar { position: fixed; bottom: 0; width: 100%; margin-bottom: 0px; padding-bottom: 15px; background: #fff; }
+			.question-group legend { font-size: 16px; margin-top: 20px; display: inline; }
+			.layui-form-pane .layui-form-label { width: 150px; }
+			/*.layui-tab-card {
+    border-radius: 1px;
+    border-color: #009688;
+    box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
+}			.layui-tab-card > .layui-tab-title li { margin-left: 0px; }*/
+		</style>
+	</head>
+
+	<body>
+		<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+			<legend>题目内容（听后回答）</legend>
+		</fieldset>
+
+		<form class="layui-form layui-form-pane">
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">题干</label>
+				<div class="layui-input-block">
+					<textarea id="content" lay-verify="required" placeholder="请输入内容 " class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">适用年级</label>
+					<div class="layui-input-inline">
+						<select name="gradeLevelId" lay-verify="required" lay-filter="gradeLevelId"></select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">学期</label>
+					<div class="layui-input-inline">
+						<select name="term" lay-verify="required">
+						</select>
+					</div>
+				</div>
+				<div class="layui-inline">
+					<button type="button" class="layui-btn layui-btn-primary file-audio" id="audio" file-name="audio">
+						<i class="layui-icon"></i>题干音频
+					</button>
+					<div class="layui-inline layui-word-aux">选择mp3文件</div>
+				</div> 
+			</div>
+			<div class="layui-form-item">
+				<div class="layui-inline">
+					<label class="layui-form-label">每小题阅题时间</label>
+					<div class="layui-input-inline">
+						<input type="number" name="wordNum" lay-verify="required|positive" placeholder="每小题阅题时间(秒)" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">每小题答题时间</label>
+					<div class="layui-input-inline">
+						<input type="number" name="wordNum" lay-verify="required|positive" placeholder="每小题答题时间(秒)" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-inline">
+					<label class="layui-form-label">每小题分数</label>
+					<div class="layui-input-inline">
+						<input type="number" name="wordNum" lay-verify="required|positive" placeholder="每小题分数" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="group-list"></div>
+			
+			<!--底部按钮-->
+			<div class="layui-form-item" style="visibility: hidden;">
+				<button class="layui-btn" type="button">占位</button>
+			</div>
+			<div class="layui-form-item" style="visibility: hidden;">
+				<button class="layui-btn" type="button">占位</button>
+			</div>
+			<div class="layui-form-item oper-bar" style="text-align: center;">
+				<hr class="layui-bg-gray">
+				<button class="layui-btn layui-btn-normal" id="addgroup" type="button">添加题组</button>
+				<button class="layui-btn layui-btn-danger" id="delgroup" type="button">删除题组</button>
+				<button class="layui-btn" lay-submit="" lay-filter="submit">提交</button>
+			</div>
+		</form>
+	</body>
+<script type="text/html" id="grouptmpl">
+<div class="question-group" data-id="{groupid}" group-no="{id}">
+	<div class="layui-form-item" style="visibility: hidden;">
+		<button class="layui-btn" type="button">占位</button>
+	</div>
+	<div class="layui-tab layui-tab-card">
+		<ul class="layui-tab-title">
+			<li class="layui-this"><input type="checkbox" class="group-check" lay-skin="primary" />&emsp;<label>题组<span class="groupno"></span></label></li>
+		</ul>
+		<div class="layui-tab-content">
+			<div class="layui-tab-item layui-show">
+
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">引导语</label>
+						<div class="layui-input-inline">
+							<input type="text" placeholder="请输入" autocomplete="off" class="layui-input guide">
+						</div>
+					</div>
+					<div class="layui-inline" id="wenjiandiv">
+						<button type="button" class="layui-btn layui-btn-primary file-audio guide" id="guideAudio{id}" file-name="guideAudio{id}">
+							<i class="layui-icon"></i>引导语音频
+						</button>
+						<div class="layui-inline layui-word-aux">选择mp3文件</div>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-inline">
+						<label class="layui-form-label">原文音频重复次数</label>
+						<div class="layui-input-inline">
+							<input type="number" lay-verify="required|positive" placeholder="原文音频重复次数" autocomplete="off" class="layui-input repeatCount">
+						</div>
+					</div>
+					<div class="layui-inline" id="wenjiandiv">
+						<button type="button" class="layui-btn layui-btn-primary file-audio question" id="questionAudio{id}" file-name="questionAudio{id}">
+							<i class="layui-icon"></i>原文音频
+						</button>
+						<div class="layui-inline layui-word-aux">选择mp3文件</div>
+					</div>
+				</div>
+				<div class="layui-form-item layui-form-text">
+					<label class="layui-form-label">原文内容</label>
+					<div class="layui-input-block">
+						<textarea id="content" lay-verify="required" placeholder="请输入内容 " class="layui-textarea originalText"></textarea>
+					</div>
+				</div>
+				<table id="{tableid}" lay-filter="{tableid}"></table>
+			</div>
+		</div>
+	</div>
+</div>
+</script>
+<script type="text/html" id="barDemo">
+	<button class="layui-btn layui-btn-xs layui-btn-normal" type="button" lay-event="add">添加</button>
+	<button class="layui-btn layui-btn-xs layui-btn-danger" type="button" lay-event="del">删除</button>
+</script>
+</html>

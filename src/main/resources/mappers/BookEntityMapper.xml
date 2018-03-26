@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.BookEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.BookEntity">
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="book_version" property="bookVersion" jdbcType="INTEGER" />
+    <result column="grade" property="grade" jdbcType="INTEGER" />
+    <result column="book_volume" property="bookVolume" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    
+    <result column="bookVersionName" property="bookVersionName" jdbcType="VARCHAR" />
+    <result column="gradeName" property="gradeName" jdbcType="VARCHAR" />
+    <result column="bookVolumeName" property="bookVolumeName" jdbcType="VARCHAR" />
+    
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, book_version, grade, book_volume, create_id, create_date, update_id, update_date, 
+    enable_flag
+  </sql>
+  <sql id="Base_Column_List_As">
+    cb.id, cb.name, cb.book_version, cb.grade, cb.book_volume, cb.create_id, cb.create_date, cb.update_id, cb.update_date, 
+    cb.enable_flag
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_book
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteBookEntity" parameterType="java.lang.Long">
+    delete from cms_book
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertBookEntity" parameterType="com.xuanli.oepcms.entity.BookEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into cms_book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="bookVersion != null" >
+        book_version,
+      </if>
+      <if test="grade != null">
+        grade,
+      </if>
+      <if test="bookVolume != null">
+        book_volume,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bookVersion != null" >
+        #{bookVersion,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="bookVolume != null">
+        #{bookVolume,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateBookEntity" parameterType="com.xuanli.oepcms.entity.BookEntity">
+    update cms_book
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bookVersion != null" >
+        book_version = #{bookVersion,jdbcType=INTEGER},
+      </if>
+      <if test="grade != null">
+        grade = #{grade,jdbcType=VARCHAR},
+      </if>
+      <if test="bookVolume != null">
+        book_volume = #{bookVolume,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  <!-- 查询书籍的信息 -->
+  <select id="getBookEntity" parameterType="com.xuanli.oepcms.entity.BookEntity" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List" />
+    from cms_book
+    where 
+    	enable_flag='T'
+      <if test="grade != null">
+        and grade = #{grade,jdbcType=VARCHAR}
+      </if>
+      <if test="bookVolume != null">
+        and book_volume = #{bookVolume,jdbcType=VARCHAR}
+      </if>
+  </select>
+
+  <!-- 查教材分页 -->
+  <select id="getBookEntityByPage" parameterType="com.xuanli.oepcms.entity.BookEntity" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    	,cde1.name as bookVersionName
+    	,cde2.name as gradeName
+    	,cde3.name as bookVolumeName
+    	
+    from cms_book cb
+    left join cms_dic_detail cde1 on cde1.name_val = cb.book_version and cde1.dic_id in(select id from cms_dic where type='jcbb')
+    left join cms_dic_detail cde2 on cde2.name_val = cb.grade  and cde2.dic_id in(select id from cms_dic where type='jcnj')
+    left join cms_dic_detail cde3 on cde3.name_val = cb.book_volume  and cde3.dic_id in(select id from cms_dic where type='cb')
+    where 
+    	1 = 1
+      <if test="name != null">
+        and cb.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="bookVersion != null">
+        and cb.book_version = #{bookVersion,jdbcType=VARCHAR}
+      </if>
+      <if test="grade != null">
+        and cb.grade = #{grade,jdbcType=VARCHAR}
+      </if>
+      <if test="bookVolume != null">
+        and cb.book_volume = #{bookVolume,jdbcType=VARCHAR}
+      </if>
+      <if test="enableFlag == null">
+        and cb.enable_flag='T'
+      </if>
+      <if test="enableFlag != null and 'all' != enableFlag">
+        and cb.enable_flag = #{enableFlag,jdbcType=VARCHAR}
+      </if>
+      
+      order by cb.book_version,cb.grade,cb.book_volume
+      
+  </select>
+
+<!-- 查教材是否存在 -->
+  <select id="repeatValid" parameterType="com.xuanli.oepcms.entity.BookEntity" resultType="java.lang.Integer">
+    select count(1) num
+    	
+    from cms_book cb
+    where 
+    	cb.enable_flag='T'
+      <if test="bookVersion != null">
+        and cb.book_version = #{bookVersion,jdbcType=VARCHAR}
+      </if>
+      <if test="grade != null">
+        and cb.grade = #{grade,jdbcType=VARCHAR}
+      </if>
+      <if test="bookVolume != null">
+        and cb.book_volume = #{bookVolume,jdbcType=VARCHAR}
+      </if>
+  </select>
+
+<!-- 版本覆盖 -->
+  <update id="coverBook" parameterType="com.xuanli.oepcms.entity.BookEntity">
+    update cms_book set enable_flag = 'F'
+    where 
+    	enable_flag='T'
+      <if test="bookVersion != null">
+        and book_version = #{bookVersion,jdbcType=VARCHAR}
+      </if>
+      <if test="grade != null">
+        and grade = #{grade,jdbcType=VARCHAR}
+      </if>
+      <if test="bookVolume != null">
+        and book_volume = #{bookVolume,jdbcType=VARCHAR}
+      </if>
+  </update>
+  
+
+</mapper>

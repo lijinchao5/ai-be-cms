@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.QuestionOptionEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.QuestionOptionEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="detail_id" property="detailId" jdbcType="BIGINT" />
+    <result column="result" property="result" jdbcType="VARCHAR" />
+    <result column="point_result" property="pointResult" jdbcType="VARCHAR" />
+    <result column="correct_result" property="correctResult" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="BIGINT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    
+    <result column="subjectId" jdbcType="BIGINT" property="subjectId" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, detail_id, result, point_result, correct_result, create_id, create_date, update_id, 
+    update_date, enable_flag
+  </sql>
+  <sql id="Base_Column_List_As">
+    t.id, t.detail_id, t.result, t.point_result, t.correct_result, t.create_id, t.create_date, t.update_id, 
+    t.update_date, t.enable_flag
+  </sql>
+  
+  <!-- 分页查询 -->
+  <select id="getEntityByPage" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    from cms_question_option t
+    left join cms_question_subject_detail sd on sd.id = t.detail_id 
+    where 
+    	t.enable_flag='T'
+      <if test="subjectId != null">
+        and sd.subject_id  = #{subjectId,jdbcType=VARCHAR}
+      </if>
+  </select>
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_question_option
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_question_option
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity" >
+    insert into cms_question_option (id, detail_id, result, 
+      point_result, correct_result, create_id, 
+      create_date, update_id, update_date, 
+      enable_flag)
+    values (#{id,jdbcType=BIGINT}, #{detailId,jdbcType=BIGINT}, #{result,jdbcType=VARCHAR}, 
+      #{pointResult,jdbcType=VARCHAR}, #{correctResult,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}, 
+      #{enableFlag,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity" >
+    insert into cms_question_option
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="detailId != null" >
+        detail_id,
+      </if>
+      <if test="result != null" >
+        result,
+      </if>
+      <if test="pointResult != null" >
+        point_result,
+      </if>
+      <if test="correctResult != null" >
+        correct_result,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="detailId != null" >
+        #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="result != null" >
+        #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="pointResult != null" >
+        #{pointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="correctResult != null" >
+        #{correctResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity" >
+    update cms_question_option
+    <set >
+      <if test="detailId != null" >
+        detail_id = #{detailId,jdbcType=BIGINT},
+      </if>
+      <if test="result != null" >
+        result = #{result,jdbcType=VARCHAR},
+      </if>
+      <if test="pointResult != null" >
+        point_result = #{pointResult,jdbcType=VARCHAR},
+      </if>
+      <if test="correctResult != null" >
+        correct_result = #{correctResult,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.QuestionOptionEntity" >
+    update cms_question_option
+    set detail_id = #{detailId,jdbcType=BIGINT},
+      result = #{result,jdbcType=VARCHAR},
+      point_result = #{pointResult,jdbcType=VARCHAR},
+      correct_result = #{correctResult,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

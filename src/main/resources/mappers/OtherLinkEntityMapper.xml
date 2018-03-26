@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.OtherLinkEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.OtherLinkEntity" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="desp1" property="desp1" jdbcType="VARCHAR" />
+    <result column="desp2" property="desp2" jdbcType="VARCHAR" />
+    <result column="desp3" property="desp3" jdbcType="VARCHAR" />
+    <result column="pic1" property="pic1" jdbcType="VARCHAR" />
+    <result column="pic2" property="pic2" jdbcType="VARCHAR" />
+    <result column="pic3" property="pic3" jdbcType="VARCHAR" />
+    <result column="link1" property="link1" jdbcType="VARCHAR" />
+    <result column="link2" property="link2" jdbcType="VARCHAR" />
+    <result column="link3" property="link3" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="orderby" property="orderby" jdbcType="INTEGER" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, desp1, desp2, desp3, pic1, pic2, pic3, link1, link2, link3, type, orderby, 
+    create_id, create_date, update_id, update_date, enable_flag
+  </sql>
+  <sql id="Base_Column_List_As" >
+    t.id, t.name, t.desp1, t.desp2, t.desp3, t.pic1, t.pic2, t.pic3, t.link1, t.link2, t.link3, t.type, t.orderby, 
+    t.create_id, t.create_date, t.update_id, t.update_date, t.enable_flag
+  </sql>
+  
+  <!-- 查询分页 -->
+  <select id="getEntityByPage" parameterType="com.xuanli.oepcms.entity.OtherLinkEntity" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    	
+    from cms_other_link t
+    
+    where 
+    	1 = 1
+      <if test="id != null">
+        and t.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="name != null">
+        and t.name like CONCAT('%',#{name,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="type != null">
+        and t.type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="enableFlag != null">
+        and t.enable_flag = #{enableFlag,jdbcType=VARCHAR}
+      </if>
+      
+      order by t.type,t.enable_flag desc,t.orderby
+      
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_other_link
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from cms_other_link
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.OtherLinkEntity" >
+    insert into cms_other_link (id, name, desp1, 
+      desp2, desp3, pic1, 
+      pic2, pic3, link1, 
+      link2, link3, type, 
+      orderby, create_id, create_date, 
+      update_id, update_date, enable_flag
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{desp1,jdbcType=VARCHAR}, 
+      #{desp2,jdbcType=VARCHAR}, #{desp3,jdbcType=VARCHAR}, #{pic1,jdbcType=VARCHAR}, 
+      #{pic2,jdbcType=VARCHAR}, #{pic3,jdbcType=VARCHAR}, #{link1,jdbcType=VARCHAR}, 
+      #{link2,jdbcType=VARCHAR}, #{link3,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, 
+      #{orderby,jdbcType=INTEGER}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, #{enableFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.OtherLinkEntity" >
+    insert into cms_other_link
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="desp1 != null" >
+        desp1,
+      </if>
+      <if test="desp2 != null" >
+        desp2,
+      </if>
+      <if test="desp3 != null" >
+        desp3,
+      </if>
+      <if test="pic1 != null" >
+        pic1,
+      </if>
+      <if test="pic2 != null" >
+        pic2,
+      </if>
+      <if test="pic3 != null" >
+        pic3,
+      </if>
+      <if test="link1 != null" >
+        link1,
+      </if>
+      <if test="link2 != null" >
+        link2,
+      </if>
+      <if test="link3 != null" >
+        link3,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="orderby != null" >
+        orderby,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="desp1 != null" >
+        #{desp1,jdbcType=VARCHAR},
+      </if>
+      <if test="desp2 != null" >
+        #{desp2,jdbcType=VARCHAR},
+      </if>
+      <if test="desp3 != null" >
+        #{desp3,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1 != null" >
+        #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="link1 != null" >
+        #{link1,jdbcType=VARCHAR},
+      </if>
+      <if test="link2 != null" >
+        #{link2,jdbcType=VARCHAR},
+      </if>
+      <if test="link3 != null" >
+        #{link3,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="orderby != null" >
+        #{orderby,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.OtherLinkEntity" >
+    update cms_other_link
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="desp1 != null" >
+        desp1 = #{desp1,jdbcType=VARCHAR},
+      </if>
+      <if test="desp2 != null" >
+        desp2 = #{desp2,jdbcType=VARCHAR},
+      </if>
+      <if test="desp3 != null" >
+        desp3 = #{desp3,jdbcType=VARCHAR},
+      </if>
+      <if test="pic1 != null" >
+        pic1 = #{pic1,jdbcType=VARCHAR},
+      </if>
+      <if test="pic2 != null" >
+        pic2 = #{pic2,jdbcType=VARCHAR},
+      </if>
+      <if test="pic3 != null" >
+        pic3 = #{pic3,jdbcType=VARCHAR},
+      </if>
+      <if test="link1 != null" >
+        link1 = #{link1,jdbcType=VARCHAR},
+      </if>
+      <if test="link2 != null" >
+        link2 = #{link2,jdbcType=VARCHAR},
+      </if>
+      <if test="link3 != null" >
+        link3 = #{link3,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="orderby != null" >
+        orderby = #{orderby,jdbcType=INTEGER},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.OtherLinkEntity" >
+    update cms_other_link
+    set name = #{name,jdbcType=VARCHAR},
+      desp1 = #{desp1,jdbcType=VARCHAR},
+      desp2 = #{desp2,jdbcType=VARCHAR},
+      desp3 = #{desp3,jdbcType=VARCHAR},
+      pic1 = #{pic1,jdbcType=VARCHAR},
+      pic2 = #{pic2,jdbcType=VARCHAR},
+      pic3 = #{pic3,jdbcType=VARCHAR},
+      link1 = #{link1,jdbcType=VARCHAR},
+      link2 = #{link2,jdbcType=VARCHAR},
+      link3 = #{link3,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      orderby = #{orderby,jdbcType=INTEGER},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

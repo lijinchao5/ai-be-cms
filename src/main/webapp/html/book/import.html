@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>CMS内容管理系统</title>
+<link rel="stylesheet" href="../../layui/css/layui.css">
+<link rel="stylesheet" href="../../css/common.css">
+<script src="../../layui/layui.js"></script>
+<script src="../../js/jquery.min.js"></script>
+<script src="../../js/jquery.form.js"></script>
+<script src="../../js/util.js"></script>
+<script src="./js/import.js"></script>
+</head>
+<body>
+<form class="layui-form layui-form-pane">
+	<div class="layui-form-item">
+    	<div class="layui-inline" style="display: none;">
+    		<label class="layui-form-label">教材名称</label>
+    		<div class="layui-input-inline">
+      		<input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input" value="">
+    		</div>
+    	</div>
+    	<div class="layui-inline">
+	    	<label class="layui-form-label">年级</label>
+	    	<div class="layui-input-inline">
+		      	<select name="grade" lay-filter="grade" lay-verify="required"></select>
+	    	</div>
+    	</div>
+    	<div class="layui-inline">
+	    	<label class="layui-form-label">教材版本</label>
+	    	<div class="layui-input-inline">
+		      	<select name="bookVersion" lay-verify="required" id="bookVersion" lay-filter="bookVersion"></select>
+	    	</div>
+    	</div>
+    	<div class="layui-inline">
+	    	<label class="layui-form-label">教材册别</label>
+	    	<div class="layui-input-inline">
+		      	<select name="bookVolume" lay-verify="required"></select>
+	    	</div>
+    	</div>
+    	<div class="layui-inline" id="wenjiandiv">
+	    	<button type="button" class="layui-btn" id="wenjian"><i class="layui-icon"></i>选择文件</button>
+				<div class="layui-inline layui-word-aux">选择要导入的ZIP包</div>
+    	</div>
+  	</div>
+  	<div class="layui-form-item" style="text-align: center;">
+    	<button class="layui-btn" lay-submit="" lay-filter="submit">导入</button>
+  	</div>
+</form>
+</body>
+</html>

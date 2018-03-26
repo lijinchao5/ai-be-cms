@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.UnitEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UnitEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="book_id" jdbcType="VARCHAR" property="bookId" />
+    <result column="create_id" jdbcType="VARCHAR" property="createId" />
+    <result column="create_date" jdbcType="DATE" property="createDate" />
+    <result column="update_id" jdbcType="VARCHAR" property="updateId" />
+    <result column="update_date" jdbcType="DATE" property="updateDate" />
+    <result column="enable_flag" jdbcType="VARCHAR" property="enableFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, book_id, create_id, create_date, update_id, update_date, enable_flag
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_unit
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteUnitEntity" parameterType="java.lang.Long">
+    delete from cms_unit
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertUnitEntity" parameterType="com.xuanli.oepcms.entity.UnitEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into cms_unit
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="bookId != null">
+        book_id,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null">
+        #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateUnitEntity" parameterType="com.xuanli.oepcms.entity.UnitEntity">
+    update cms_unit
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="bookId != null">
+        book_id = #{bookId,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+  <select id="getUnitEntity" parameterType="com.xuanli.oepcms.entity.UnitEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_unit
+    where enable_flag='T' 
+    <if test="bookId != null">
+      and book_id = #{bookId,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <!-- 分页查询 -->
+  <select id="getUnitEntityByPage" parameterType="com.xuanli.oepcms.entity.UnitEntity" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cms_unit
+    where enable_flag='T' 
+    <if test="bookId != null">
+      and book_id = #{bookId,jdbcType=VARCHAR}
+    </if>
+    
+  </select>
+
+
+</mapper>

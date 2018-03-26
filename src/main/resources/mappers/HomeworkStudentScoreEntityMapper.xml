@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.HomeworkStudentScoreEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.HomeworkStudentScoreEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="student_id" property="studentId" jdbcType="BIGINT" />
+    <result column="homework_id" property="homeworkId" jdbcType="BIGINT" />
+    <result column="section_id" property="sectionId" jdbcType="BIGINT" />
+    <result column="audio_path" property="audioPath" jdbcType="VARCHAR" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="BIGINT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, student_id, homework_id, section_id, audio_path, text, score, remark, create_id, 
+    create_date, update_id, update_date, enable_flag
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from xl_homework_student_score
+    where id = #{id,jdbcType=BIGINT}
+      <if test="studentId != null" >
+        and student_id = #{studentId,jdbcType=BIGINT}
+      </if>
+      <if test="sectionId != null" >
+        and section_id = #{sectionId,jdbcType=BIGINT}
+      </if>
+      <if test="homeworkId != null" >
+        and homework_id = #{homeworkId,jdbcType=BIGINT}
+      </if>
+  </select>
+  <delete id="deleteHomeworkStudentScoreEntity" parameterType="java.lang.Long" >
+    delete from xl_homework_student_score
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertHomeworkStudentScoreEntity" parameterType="com.xuanli.oepcms.entity.HomeworkStudentScoreEntity" >
+    insert into xl_homework_student_score
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+      <if test="sectionId != null">
+        section_id,
+      </if>
+      <if test="audioPath != null">
+        audio_path,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createId != null">
+        create_id,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="updateId != null">
+        update_id,
+      </if>
+      <if test="updateDate != null">
+        update_date,
+      </if>
+      <if test="enableFlag != null">
+        enable_flag,
+      </if>
+      <if test="integrity != null">
+        integrity,
+      </if>
+      <if test="pronunciation != null">
+        pronunciation,
+      </if>
+      <if test="fluency != null">
+        fluency,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="sectionId != null">
+        #{sectionId,jdbcType=BIGINT},
+      </if>
+      <if test="audioPath != null">
+        #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="integrity != null">
+        #{integrity,jdbcType=DOUBLE},
+      </if>
+      <if test="pronunciation != null">
+        #{pronunciation,jdbcType=DOUBLE},
+      </if>
+      <if test="fluency != null">
+        #{fluency,jdbcType=DOUBLE},
+      </if>
+     </trim>
+  </insert>
+  <update id="updateHomeworkStudentScoreEntity" parameterType="com.xuanli.oepcms.entity.HomeworkStudentScoreEntity" >
+    update xl_homework_student_score
+    <set>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkId != null">
+        homework_id = #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="sectionId != null">
+        section_id = #{sectionId,jdbcType=BIGINT},
+      </if>
+      <if test="audioPath != null">
+        audio_path = #{audioPath,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null">
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null">
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null">
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="integrity != null">
+        integrity = #{integrity,jdbcType=DOUBLE},
+      </if>
+      <if test="pronunciation != null">
+        pronunciation = #{pronunciation,jdbcType=DOUBLE},
+      </if>
+      <if test="fluency != null">
+        fluency = #{fluency,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="reportStudentScore" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+  	select hss.student_id,SUM(score) score from xl_homework_student_score hss where hss.homework_id = #{value} group by student_id
+  </select>
+  
+  <select id="selectHomeworkStudentScore" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.controller.bean.HomeworkScoreBean" >
+    select 
+    	<include refid="Base_Column_List" />
+    from xl_homework_student_score
+    where 1=1 
+      <if test="studentId != null" >
+        and student_id = #{studentId,jdbcType=BIGINT}
+      </if>
+      <if test="sectionId != null" >
+        and section_id = #{sectionId,jdbcType=BIGINT}
+      </if>
+      <if test="homeworkId != null" >
+        and homework_id = #{homeworkId,jdbcType=BIGINT}
+      </if>
+  </select>
+  
+  <select id="getStudentHomework" parameterType="com.xuanli.oepcms.controller.bean.HomeworkScoreBean" resultType="com.xuanli.oepcms.controller.bean.HomeworkScoreBean">
+  	SELECT
+		hss.id id,
+		hss.student_id studentid,
+		hss.homework_id homeworkid,
+		hss.section_id sectionid,
+		hss.audio_path audiopath,
+		hss.text studenttext,
+		hss.score studentscore,
+		hd.homework_type homeworktype,
+		hd.section_detail_id sectiondetailid,
+		sd.audio_path standeraudiopath,
+		sd.text standertext,
+		sd.m_audio_path standermaudiopath,
+		sd.w_audio_path standerwaudiopath,
+		sd.word_mean standerwordmean
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				xl_homework_student_score
+			WHERE
+				homework_id = #{homeworkId}
+				and 
+				student_id = #{studentId}
+		) hss
+	LEFT JOIN (
+		SELECT
+			*
+		FROM
+			xl_homework_detail
+		WHERE
+			homework_id = #{homeworkId}
+	) hd ON hss.section_id = hd.id
+	LEFT JOIN xl_section_detail sd ON hd.section_detail_id = sd.id
+  where 1=1
+  <if test="homeworkType!=null">
+	 and homework_type=#{homeworkType}
+  </if>
+  </select>
+  
+  
+  <select id="getHomeworkPickScore" parameterType="java.lang.Long" resultType="com.xuanli.oepcms.controller.bean.HomeworkPicScoreBean">
+  	SELECT
+		hd.homework_type homeworktype,
+		hd.id id,
+		CONCAT(sd.text) text,
+		sum(hss.score) / count(hss.id) score,
+		sum(hss.fluency) fluency,
+		sum(hss.integrity) integrity,
+		sum(hss.pronunciation) pronunciation
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				xl_homework_student_score
+			WHERE
+				homework_id = #{value}
+		) hss
+	LEFT JOIN xl_homework_detail hd ON hd.id = hss.section_id
+	LEFT JOIN xl_section_detail sd ON sd.id = hd.section_detail_id
+	GROUP BY
+		hd.homework_type,
+		hd.id
+  </select>
+  <select id="getHomeworkPicTypeScore" parameterType="java.lang.Long" resultType="com.xuanli.oepcms.controller.bean.HomeworkPicScoreBean">
+  	SELECT
+		hd.homework_type homeworktype,
+		sum(hss.score) / count(hss.id) score,
+		sum(hss.fluency) fluency,
+		sum(hss.integrity) intergrity,
+		sum(hss.pronunciation) pronunciation
+	FROM
+		(
+			SELECT
+				*
+			FROM
+				xl_homework_student_score
+			WHERE
+				homework_id = #{value}
+		) hss
+	LEFT JOIN xl_homework_detail hd ON hd.id = hss.section_id
+	GROUP BY
+		hd.homework_type
+  </select>
+  
+</mapper>

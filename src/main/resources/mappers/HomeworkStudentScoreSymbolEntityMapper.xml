@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.HomeworkStudentScoreSymbolEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.HomeworkStudentScoreSymbolEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="homework_id" jdbcType="BIGINT" property="homeworkId" />
+    <result column="homework_detail_id" jdbcType="BIGINT" property="homeworkDetailId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="symbol" jdbcType="VARCHAR" property="symbol" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, homework_id, homework_detail_id, student_id, score, symbol
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_homework_student_score_symbol
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteHomeworkStudentScoreSymbolEntity" parameterType="java.lang.Long">
+    delete from xl_homework_student_score_symbol
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertHomeworkStudentScoreSymbolEntity" parameterType="com.xuanli.oepcms.entity.HomeworkStudentScoreSymbolEntity">
+    insert into xl_homework_student_score_symbol
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+      <if test="homeworkDetailId != null">
+        homework_detail_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="symbol != null">
+        symbol,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkDetailId != null">
+        #{homeworkDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="symbol != null">
+        #{symbol,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateHomeworkStudentScoreSymbolEntity" parameterType="com.xuanli.oepcms.entity.HomeworkStudentScoreSymbolEntity">
+    update xl_homework_student_score_symbol
+    <set>
+      <if test="homeworkId != null">
+        homework_id = #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkDetailId != null">
+        homework_detail_id = #{homeworkDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="symbol != null">
+        symbol = #{symbol,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+
+	<select id="getHomeworkSymbolScore" resultType="com.xuanli.oepcms.controller.bean.HomeworkSymbolScore" parameterType="java.lang.Long">
+		SELECT
+			rs.symbol symbol,
+			sum(rs.score) / count(rs.id) AS score,
+			GROUP_CONCAT(rs.text) word
+		FROM
+			(
+				SELECT
+					hsss.symbol,
+					sd.text,
+					hsss.score,
+					hsss.id
+				FROM
+					(
+						SELECT
+							*
+						FROM
+							xl_homework_student_score_symbol
+						WHERE
+							homework_id = #{value}
+					) hsss
+				LEFT JOIN xl_homework_detail hd ON hsss.homework_detail_id = hd.id
+				LEFT JOIN xl_section_detail sd ON sd.id = hd.section_detail_id
+			) rs
+		GROUP BY
+			rs.symbol
+		ORDER BY
+			score DESC
+	
+	</select>
+
+</mapper>

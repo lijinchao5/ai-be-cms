@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.QuestionSubjectDetailEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="subject_id" property="subjectId" jdbcType="BIGINT" />
+    <result column="type" property="type" jdbcType="INTEGER" />
+    <result column="guide" property="guide" jdbcType="VARCHAR" />
+    <result column="question" property="question" jdbcType="VARCHAR" />
+    <result column="guide_audio" property="guideAudio" jdbcType="VARCHAR" />
+    <result column="read_time" property="readTime" jdbcType="INTEGER" />
+    <result column="question_audio" property="questionAudio" jdbcType="VARCHAR" />
+    <result column="write_time" property="writeTime" jdbcType="INTEGER" />
+    <result column="question_no" property="questionNo" jdbcType="INTEGER" />
+    <result column="repeat_count" property="repeatCount" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="original_text" property="originalText" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="BIGINT" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="BIGINT" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, subject_id, type, guide, question, guide_audio, read_time, question_audio, write_time, 
+    question_no, repeat_count, score, original_text, create_id, create_date, update_id, 
+    update_date, enable_flag
+  </sql>
+  <sql id="Base_Column_List_As" >
+    t.id, t.subject_id, t.type, t.guide, t.question, t.guide_audio, t.read_time, t.question_audio, t.write_time, 
+    t.question_no, t.repeat_count, t.score, t.original_text, t.create_id, t.create_date, t.update_id, 
+    t.update_date, t.enable_flag
+  </sql>
+  
+  <!-- 分页查询 -->
+  <select id="getEntityByPage" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    from cms_question_subject_detail t
+    where 
+    	t.enable_flag='T'
+      <if test="subjectId != null">
+        and t.subject_id  = #{subjectId,jdbcType=VARCHAR}
+      </if>
+      
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_question_subject_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_question_subject_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" >
+    insert into cms_question_subject_detail (id, subject_id, type, 
+      guide, question, guide_audio, 
+      read_time, question_audio, write_time, 
+      question_no, repeat_count, score, 
+      original_text, create_id, create_date, 
+      update_id, update_date, enable_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{subjectId,jdbcType=BIGINT}, #{type,jdbcType=INTEGER}, 
+      #{guide,jdbcType=VARCHAR}, #{question,jdbcType=VARCHAR}, #{guideAudio,jdbcType=VARCHAR}, 
+      #{readTime,jdbcType=INTEGER}, #{questionAudio,jdbcType=VARCHAR}, #{writeTime,jdbcType=INTEGER}, 
+      #{questionNo,jdbcType=INTEGER}, #{repeatCount,jdbcType=INTEGER}, #{score,jdbcType=DOUBLE}, 
+      #{originalText,jdbcType=VARCHAR}, #{createId,jdbcType=BIGINT}, #{createDate,jdbcType=TIMESTAMP}, 
+      #{updateId,jdbcType=BIGINT}, #{updateDate,jdbcType=TIMESTAMP}, #{enableFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" >
+    insert into cms_question_subject_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="subjectId != null" >
+        subject_id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="guide != null" >
+        guide,
+      </if>
+      <if test="question != null" >
+        question,
+      </if>
+      <if test="guideAudio != null" >
+        guide_audio,
+      </if>
+      <if test="readTime != null" >
+        read_time,
+      </if>
+      <if test="questionAudio != null" >
+        question_audio,
+      </if>
+      <if test="writeTime != null" >
+        write_time,
+      </if>
+      <if test="questionNo != null" >
+        question_no,
+      </if>
+      <if test="repeatCount != null" >
+        repeat_count,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="originalText != null" >
+        original_text,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="subjectId != null" >
+        #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null" >
+        #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null" >
+        #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAudio != null" >
+        #{guideAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null" >
+        #{readTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionAudio != null" >
+        #{questionAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="writeTime != null" >
+        #{writeTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionNo != null" >
+        #{questionNo,jdbcType=INTEGER},
+      </if>
+      <if test="repeatCount != null" >
+        #{repeatCount,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="originalText != null" >
+        #{originalText,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" >
+    update cms_question_subject_detail
+    <set >
+      <if test="subjectId != null" >
+        subject_id = #{subjectId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="guide != null" >
+        guide = #{guide,jdbcType=VARCHAR},
+      </if>
+      <if test="question != null" >
+        question = #{question,jdbcType=VARCHAR},
+      </if>
+      <if test="guideAudio != null" >
+        guide_audio = #{guideAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="readTime != null" >
+        read_time = #{readTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionAudio != null" >
+        question_audio = #{questionAudio,jdbcType=VARCHAR},
+      </if>
+      <if test="writeTime != null" >
+        write_time = #{writeTime,jdbcType=INTEGER},
+      </if>
+      <if test="questionNo != null" >
+        question_no = #{questionNo,jdbcType=INTEGER},
+      </if>
+      <if test="repeatCount != null" >
+        repeat_count = #{repeatCount,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="originalText != null" >
+        original_text = #{originalText,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=BIGINT},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=BIGINT},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.QuestionSubjectDetailEntity" >
+    update cms_question_subject_detail
+    set subject_id = #{subjectId,jdbcType=BIGINT},
+      type = #{type,jdbcType=INTEGER},
+      guide = #{guide,jdbcType=VARCHAR},
+      question = #{question,jdbcType=VARCHAR},
+      guide_audio = #{guideAudio,jdbcType=VARCHAR},
+      read_time = #{readTime,jdbcType=INTEGER},
+      question_audio = #{questionAudio,jdbcType=VARCHAR},
+      write_time = #{writeTime,jdbcType=INTEGER},
+      question_no = #{questionNo,jdbcType=INTEGER},
+      repeat_count = #{repeatCount,jdbcType=INTEGER},
+      score = #{score,jdbcType=DOUBLE},
+      original_text = #{originalText,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=BIGINT},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      update_id = #{updateId,jdbcType=BIGINT},
+      update_date = #{updateDate,jdbcType=TIMESTAMP},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

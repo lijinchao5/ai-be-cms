@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.UserEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.UserEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="sex" property="sex" jdbcType="VARCHAR" />
+    <result column="birth_date" property="birthDate" jdbcType="DATE" />
+    <result column="study_section_id" property="studySectionId" jdbcType="INTEGER" />
+    <result column="grade__level_id" property="gradeLevelId" jdbcType="INTEGER" />
+    <result column="book_version_id" property="bookVersionId" jdbcType="INTEGER" />
+    <result column="role_id" property="roleId" jdbcType="INTEGER" />
+    <result column="name_num" property="nameNum" jdbcType="VARCHAR" />
+    <result column="remark" property="remark" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+    <result column="schoolid" property="schoolid" jdbcType="VARCHAR" />
+    <result column="areaid" property="areaid" jdbcType="VARCHAR" />
+    <result column="cms_id" property="cmsId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, mobile, password, sex, birth_date, study_section_id, grade__level_id, book_version_id, 
+    role_id, name_num, remark, create_id, create_date, update_id, update_date, enable_flag,schoolid,areaid,cms_id
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="selectUserEntity" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_user
+    where enable_flag='T' 
+      <if test="mobile != null" >
+        and mobile = #{mobile,jdbcType=VARCHAR}
+      </if>
+      <if test="nameNum != null" >
+        and name_num = #{nameNum,jdbcType=VARCHAR}
+      </if>
+      <if test="id != null" >
+        and id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="areaid != null" >
+        and areaid = #{areaid,jdbcType=VARCHAR}
+      </if>
+  </select>
+  <select id="login" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_user
+    where enable_flag='T' 
+      <if test="mobile != null" >
+        and (mobile = #{mobile,jdbcType=VARCHAR} or name_num = #{mobile,jdbcType=VARCHAR})
+      </if>
+  </select>
+  <delete id="deleteUserEntity" parameterType="java.lang.Long" >
+    delete from cms_user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertUserEntity" parameterType="com.xuanli.oepcms.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+    insert into cms_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="sex != null" >
+        sex,
+      </if>
+      <if test="birthDate != null" >
+        birth_date,
+      </if>
+      <if test="studySectionId != null" >
+        study_section_id,
+      </if>
+      <if test="gradeLevelId != null" >
+        grade__level_id,
+      </if>
+      <if test="bookVersionId != null" >
+        book_version_id,
+      </if>
+      <if test="roleId != null" >
+        role_id,
+      </if>
+      <if test="nameNum != null" >
+        name_num,
+      </if>
+      <if test="remark != null" >
+        remark,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="schoolid != null" >
+        schoolid,
+      </if>
+      <if test="areaid != null" >
+        areaid,
+      </if>
+      <if test="cmsId != null" >
+        cms_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        #{birthDate,jdbcType=DATE},
+      </if>
+      <if test="studySectionId != null" >
+        #{studySectionId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null" >
+        #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="bookVersionId != null" >
+        #{bookVersionId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="nameNum != null" >
+        #{nameNum,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null" >
+        #{cmsId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateUserEntity" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+    update cms_user
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null" >
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthDate != null" >
+        birth_date = #{birthDate,jdbcType=DATE},
+      </if>
+      <if test="studySectionId != null" >
+        study_section_id = #{studySectionId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeLevelId != null" >
+        grade__level_id = #{gradeLevelId,jdbcType=INTEGER},
+      </if>
+      <if test="bookVersionId != null" >
+        book_version_id = #{bookVersionId,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null" >
+        role_id = #{roleId,jdbcType=INTEGER},
+      </if>
+      <if test="nameNum != null" >
+        name_num = #{nameNum,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolid != null" >
+        schoolid = #{schoolid,jdbcType=VARCHAR},
+      </if>
+      <if test="areaid != null" >
+        areaid = #{areaid,jdbcType=VARCHAR},
+      </if>
+      <if test="cmsId != null" >
+        cms_id = #{cmsId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  
+  
+  
+  <!-- 保存教师和学校的关系 -->
+  <insert id="insertUserSchool" parameterType="com.xuanli.oepcms.entity.UserSchoolEntity">
+	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
+	  select count(*) id from cms_user_school where user_id=#{userId,jdbcType=BIGINT} and school_id=#{schoolId,jdbcType=BIGINT}
+	</selectKey>
+	<if test="allSize==0">
+	  insert into cms_user_school(user_id,school_id) values(#{userId,jdbcType=BIGINT}, #{schoolId,jdbcType=BIGINT})
+	</if>
+  </insert>
+  <!-- 保存学生和班级的关系 -->
+  <insert id="inserUserClas" parameterType="com.xuanli.oepcms.entity.UserClasEntity">
+	<selectKey keyProperty="allSize" resultType="int" order="BEFORE">
+	  select count(*) id from cms_user_clas where user_id=#{userId,jdbcType=BIGINT} and clas_id=#{clasId,jdbcType=BIGINT}
+	</selectKey>
+	<if test="allSize==0">
+	  insert into cms_user_clas(user_id,clas_id) values(#{userId,jdbcType=BIGINT}, #{clasId,jdbcType=BIGINT})
+	</if>
+  </insert>
+  
+  
+  <select id="getUserSchool" resultType="com.xuanli.oepcms.entity.UserSchoolEntity" parameterType="java.lang.Long">
+  	select id,user_id userId,school_id schoolid from cms_user_school where user_id=#{value}
+  
+  </select>
+  
+  <select id="findStudentByPageTotal" parameterType="com.xuanli.oepcms.entity.UserEntity" resultType="java.lang.Integer">
+	  select
+			count(*)
+		FROM
+			cms_user where id in (
+				SELECT
+					user_id
+				FROM
+					cms_user_clas
+				WHERE
+					clas_id = #{clasId,jdbcType=VARCHAR} and clas_id in (
+						select id from xl_clas where create_id=#{clasCreateId}
+					)
+			)
+  </select>
+  <select id="findStudentByPage" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+    	select 
+    		<include refid="Base_Column_List" />
+		FROM
+			cms_user where id in (
+				SELECT
+					user_id
+				FROM
+					cms_user_clas
+				WHERE
+					clas_id = #{clasId,jdbcType=VARCHAR} and clas_id in (
+						select id from xl_clas where create_id=#{clasCreateId}
+					)
+			)
+		limit #{start},#{end}
+  </select>
+  
+  <delete id="deleteUserClas" parameterType="com.xuanli.oepcms.entity.UserClasEntity">
+  	delete from cms_user_clas where user_id=#{userId,jdbcType=BIGINT} and clas_id=#{clasId,jdbcType=BIGINT}
+  </delete>
+  <select id="exportNameNum" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity">
+		SELECT
+			xu.id, xu.name, xu.mobile, xu.password, xu.sex, xu.birth_date, xu.study_section_id, xu.grade__level_id, xu.book_version_id,xu.role_id,
+			xu.name_num, xu.remark, xu.create_id, xu.create_date, xu.update_id, xu.update_date, xu.enable_flag
+		FROM
+			cms_user_clas xuc LEFT JOIN cms_user xu ON xuc.user_id = xu.id
+			WHERE
+		xuc.clas_id = #{clasId} AND xu.name_num is NOT NULL
+	</select>
+  <select id="getClasUserStudent" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity">
+		select 
+			xu.id, xu.name, xu.mobile, xu.password, xu.sex, xu.birth_date, xu.study_section_id, xu.grade__level_id, xu.book_version_id,xu.role_id,
+			xu.name_num, xu.remark, xu.create_id, xu.create_date, xu.update_id, xu.update_date, xu.enable_flag
+		from 
+			(select * from cms_user_clas where clas_id=#{clasId}) xuc 
+		LEFT JOIN 
+			cms_user xu ON xuc.user_id = xu.id 
+		where 
+			xu.name_num  is null or (xu.name_num is not null and xu.update_date is not null)
+	</select>
+	
+	
+	<select id="findByPage" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from cms_user
+	    where  enable_flag ='T'
+	    <if test="name != null and name!='' ">
+	      and  name_num like '%${name}%'
+	    </if>
+	    <if test="schoolid != null and schoolid!='' ">
+	      and  schoolid = #{schoolid}
+	    </if>
+	    <if test="areaid != null and areaid!='' ">
+	      and  areaid = #{areaid}
+	    </if>
+  </select>
+  
+  <select id="findByName" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.UserEntity" >
+	    select 
+	    <include refid="Base_Column_List" />
+	    from cms_user
+	    where  1=1
+	    <if test="name != null ">
+	      and  name_num = #{name}
+	    </if>
+  </select>
+	
+	
+</mapper>

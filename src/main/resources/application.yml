@@ -1,0 +1,4 @@
+#环境配置：dev开发环境；prod生产环境
+spring:
+  profiles:
+    active: dev

@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.SchoolEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.SchoolEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="school_id" property="schoolId" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="address_province" property="addressProvince" jdbcType="VARCHAR" />
+    <result column="address_city" property="addressCity" jdbcType="VARCHAR" />
+    <result column="address_area" property="addressArea" jdbcType="VARCHAR" />
+    <result column="address_province_name" property="addressProvinceName" jdbcType="VARCHAR" />
+    <result column="address_city_name" property="addressCityName" jdbcType="VARCHAR" />
+    <result column="address_area_name" property="addressAreaName" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="update_id" property="updateId" jdbcType="INTEGER" />
+    <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <result column="startdate" property="startdate" jdbcType="TIMESTAMP" />
+    <result column="enddate" property="enddate" jdbcType="TIMESTAMP" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, school_id, name, address_province, address_city, address_area, create_id, create_date, 
+    update_id, update_date, enable_flag,startdate,enddate
+  </sql>
+  <select id="selectById" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_school
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="selectMaxId" resultType="int" >
+    <!-- SELECT MAX(id)+1 id FROM cms_school -->
+    SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_NAME='cms_school'
+  </select>
+  
+  <select id="selectSchoolEntity" resultMap="BaseResultMap" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_school
+    where enable_flag = 'T' 
+      <if test="schoolId != null" >
+        and school_id = #{schoolId,jdbcType=VARCHAR} 
+      </if>
+      <if test="name != null" >
+        and name = #{name,jdbcType=VARCHAR} 
+      </if>
+      <if test="addressProvince != null" >
+        and address_province = #{addressProvince,jdbcType=VARCHAR} 
+      </if>
+      <if test="addressCity != null" >
+        and address_city = #{addressCity,jdbcType=VARCHAR} 
+      </if>
+      <if test="addressArea != null" >
+        and address_area = #{addressArea,jdbcType=VARCHAR} 
+      </if>
+  </select>
+  <delete id="deleteSchoolEntity" parameterType="java.lang.Long" >
+    delete from cms_school
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insertSchoolEntity" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
+    insert into cms_school
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="schoolId != null" >
+        school_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="addressProvince != null" >
+        address_province,
+      </if>
+      <if test="addressCity != null" >
+        address_city,
+      </if>
+      <if test="addressArea != null" >
+        address_area,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+      <if test="startdate != null" >
+        startdate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProvince != null" >
+        #{addressProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressArea != null" >
+        #{addressArea,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="startdate != null" >
+        #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateSchoolEntity" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
+    update cms_school
+    <set >
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="addressProvince != null" >
+        address_province = #{addressProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="addressCity != null" >
+        address_city = #{addressCity,jdbcType=VARCHAR},
+      </if>
+      <if test="addressArea != null" >
+        address_area = #{addressArea,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=INTEGER},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="startdate != null" >
+        startdate = #{startdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  
+  <select id="findByPageTotal" resultType="int" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
+    select 
+    	count(id)
+    from cms_school
+    where 
+    	enable_flag='T'
+    <if test="name != null" >
+        and name like '%${name}%'
+    </if>
+  </select>
+  
+  
+  <select id="findByPage" resultType="com.xuanli.oepcms.entity.SchoolEntity" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
+    SELECT t1.id, t1.school_id AS schoolId, t1.name, 
+    	t1.address_province AS addressProvince, t2.texts AS addressProvinceName, 
+ 		t1.address_city AS addressCity,t3.texts AS addressCityName, 
+ 		t1.address_area AS addressArea,t4.texts AS addressAreaName, 
+ 		t1.create_id AS createId, t1.create_date AS createDate,t1.update_id AS updateId, t1.update_date AS updateDate, t1.enable_flag AS enableFlag,
+ 		t1.startdate ,t1.enddate
+    FROM cms_school t1 
+    LEFT JOIN cms_area t2 ON t1.address_province=t2.id
+	LEFT JOIN cms_area t3 ON t1.address_city=t3.id 
+	LEFT JOIN cms_area t4 ON t1.address_area=t4.id
+    WHERE 
+    	t1.enable_flag='T'
+    <if test="name != null" >
+        and t1.name like '%${name}%'
+    </if>
+    <if test="schoolId != null" >
+        and t1.school_id like '%${schoolId}%'
+    </if>
+    <if test='state != null and state== "1" ' >
+        and t1.enddate > NOW() 
+    </if>
+    <if test='state != null and state== "0" '  >
+        and (t1.enddate &lt; NOW() or t1.enddate is null)
+    </if>
+    <if test="addressProvince != null and addressProvince!=''" >
+        and t1.address_province = #{addressProvince}
+    </if>
+    <if test="addressCity != null and addressCity!=''" >
+        and t1.address_city = #{addressCity}
+    </if>
+    <if test="addressArea != null and addressArea!=''" >
+        and t1.address_area = #{addressArea}
+    </if>
+    order by t1.id desc
+  </select>
+  
+  <select id="findById" resultType="com.xuanli.oepcms.entity.SchoolEntity" parameterType="com.xuanli.oepcms.entity.SchoolEntity" >
+    SELECT t1.id, t1.school_id AS schoolId, t1.name, 
+    	t1.address_province AS addressProvince, t2.text AS addressProvinceName, 
+ 		t1.address_city AS addressCity,t3.text AS addressCityName, 
+ 		t1.address_area AS addressArea,t4.text AS addressAreaName, 
+ 		t1.create_id AS createId, t1.create_date AS createDate,t1.update_id AS updateId, t1.update_date AS updateDate, t1.enable_flag AS enableFlag
+    FROM cms_school t1 
+    LEFT JOIN cms_area t2 ON t1.address_province=t2.id
+	LEFT JOIN cms_area t3 ON t1.address_city=t3.id 
+	LEFT JOIN cms_area t4 ON t1.address_area=t4.id
+    WHERE 
+    	t1.enable_flag='T'
+    <if test="id != null" >
+        and t1.id like '#{id}'
+    </if>
+    
+  </select>
+  
+  
+</mapper>

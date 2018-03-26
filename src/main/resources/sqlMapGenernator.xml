@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<classPathEntry location="C:\OtherFiles\project-java\DataTransfers\lib\mysql-connector-java-5.1.7-bin.jar" />
+	<context id="my" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<property name="suppressDate" value="false" />
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://39.104.76.67:3086/oep_cms" userId="test" password="09)(poPO" />
+		<javaModelGenerator targetPackage="com.xuanli.oepcms.entity" targetProject="oep-be-cms\src\main\java">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+
+		<sqlMapGenerator targetPackage="mappers" targetProject="oep-be-cms\src\main\resources">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<javaClientGenerator targetPackage="com.xuanli.oepcms.mapper" targetProject="oep-be-cms\src\main\java" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+<!-- 		<table tableName="xl_user" domainObjectName="UserEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+		<table tableName="xl_school" domainObjectName="SchoolEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+		<table tableName="xl_role" domainObjectName="RoleEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+		<table tableName="xl_menu" domainObjectName="MenuEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+		<table tableName="xl_dic" domainObjectName="DicEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ 		<table tableName="xl_clas" domainObjectName="ClasEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ 		<table tableName="xl_homework_student" domainObjectName="HomeworkStudentEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ 		<table tableName="xl_homework_student_score" domainObjectName="HomeworkStudentScoreEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ 		<table tableName="xl_homework_student_score_symbol" domainObjectName="HomeworkStudentScoreSymbolEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ 		<table tableName="xl_homework_student" domainObjectName="HomeworkStudentEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ 		<table tableName="xl_dic_detail" domainObjectName="DicDetailEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+ -->		
+ 		<table tableName="cms_question_option" domainObjectName="QuestionOptionEntity" enableInsert="true"  enableSelectByPrimaryKey="true" enableUpdateByPrimaryKey="true" enableDeleteByPrimaryKey="true" enableSelectByExample="false" enableDeleteByExample="false" enableCountByExample="false" enableUpdateByExample="false"/>  
+
+
+	</context>
+</generatorConfiguration>

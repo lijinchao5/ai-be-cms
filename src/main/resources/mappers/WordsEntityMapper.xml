@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xuanli.oepcms.mapper.WordsEntityMapper" >
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.WordsEntity" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="word_spell" property="wordSpell" jdbcType="VARCHAR" />
+    <result column="word_mean" property="wordMean" jdbcType="VARCHAR" />
+    <result column="word_type" property="wordType" jdbcType="VARCHAR" />
+    <result column="phonetic_symbol" property="phoneticSymbol" jdbcType="VARCHAR" />
+    <result column="picture_path" property="picturePath" jdbcType="VARCHAR" />
+    <result column="audio_path_m" property="audioPathM" jdbcType="VARCHAR" />
+    <result column="audio_path_w" property="audioPathW" jdbcType="VARCHAR" />
+    <result column="audio_path_m_uk" property="audioPathMUk" jdbcType="VARCHAR" />
+    <result column="audio_path_w_uk" property="audioPathWUk" jdbcType="VARCHAR" />
+    <result column="audio_path_m_us" property="audioPathMUs" jdbcType="VARCHAR" />
+    <result column="audio_path_w_us" property="audioPathWUs" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="create_id" property="createId" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="update_id" property="updateId" jdbcType="VARCHAR" />
+    <result column="update_date" property="updateDate" jdbcType="DATE" />
+    <result column="enable_flag" property="enableFlag" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, word_spell, word_mean, word_type, phonetic_symbol, picture_path, audio_path_m, 
+    audio_path_w, audio_path_m_uk, audio_path_w_uk, audio_path_m_us, audio_path_w_us, 
+    type, create_id, create_date, update_id, update_date, enable_flag
+  </sql>
+  
+  <sql id="Base_Column_List_As" >
+    t.id, t.word_spell, t.word_mean, t.word_type, t.phonetic_symbol
+    , t.picture_path, t.audio_path_m,  t.audio_path_w
+    <!-- , t.audio_path_m_uk, t.audio_path_w_uk, t.audio_path_m_us, t.audio_path_w_us --> 
+    ,t.type, t.create_id, t.create_date, t.update_id, t.update_date, t.enable_flag
+  </sql>
+  
+    
+  <!-- 批量插入 -->
+  	<insert id="insertWordsBatch" parameterType="java.util.List">
+  		insert into cms_words ( word_spell, word_mean, 
+      	word_type, phonetic_symbol, picture_path, 
+      	audio_path_m, audio_path_w, audio_path_m_uk, 
+      	audio_path_w_uk, audio_path_m_us, audio_path_w_us, 
+      	type, create_id, create_date, 
+      	update_id, update_date, enable_flag
+      	) values
+        <foreach collection="list" item="item" index="index" separator=",">
+       	(     
+       	#{item.wordSpell,jdbcType=VARCHAR}, #{item.wordMean,jdbcType=VARCHAR}, 
+      	#{item.wordType,jdbcType=VARCHAR}, #{item.phoneticSymbol,jdbcType=VARCHAR}, #{item.picturePath,jdbcType=VARCHAR}, 
+      	#{item.audioPathM,jdbcType=VARCHAR}, #{item.audioPathW,jdbcType=VARCHAR}, #{item.audioPathMUk,jdbcType=VARCHAR}, 
+      	#{item.audioPathWUk,jdbcType=VARCHAR}, #{item.audioPathMUs,jdbcType=VARCHAR}, #{item.audioPathWUs,jdbcType=VARCHAR}, 
+      	#{item.type,jdbcType=VARCHAR}, #{item.createId,jdbcType=VARCHAR}, #{item.createDate,jdbcType=DATE}, 
+      	#{item.updateId,jdbcType=VARCHAR}, #{item.updateDate,jdbcType=DATE}, #{item.enableFlag,jdbcType=VARCHAR}
+      	)
+        </foreach>
+	</insert>
+  
+  <!-- 查询分页 -->
+  <select id="getEntityByPage" parameterType="com.xuanli.oepcms.entity.WordsEntity" resultMap="BaseResultMap">
+    select 
+    	<include refid="Base_Column_List_As" />
+    	<!-- ,cde1.name as typeName -->
+    	
+    from cms_words t
+    <!-- left join cms_dic_detail cde1 on cde1.name_val = t.type and cde1.enable_flag='T' and cde1.dic_id in(select id from cms_dic where type='dck') -->
+    
+    
+    where 
+    	t.enable_flag='T' 
+      <if test="id != null">
+        and t.id = #{id,jdbcType=BIGINT}
+      </if>
+      <if test="wordSpell != null">
+        and t.word_spell like CONCAT('%',#{wordSpell,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="wordMean != null">
+        and t.word_mean like CONCAT('%',#{wordMean,jdbcType=VARCHAR},'%' )
+      </if>
+      <if test="type != null">
+        and t.type = #{type,jdbcType=VARCHAR}
+      </if>
+      
+      order by t.word_spell,t.type
+      
+  </select>
+  
+  <!-- 查单词是否存在 -->
+  <select id="repeatValid" parameterType="com.xuanli.oepcms.entity.WordsEntity" resultType="java.lang.Integer">
+    select count(1) num
+    	
+    from cms_words t
+    where 
+   	t.enable_flag='T'
+       and t.word_spell = #{wordSpell,jdbcType=VARCHAR}
+       and t.type = #{type,jdbcType=VARCHAR}
+  </select>
+  
+  
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from cms_words
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from cms_words
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.xuanli.oepcms.entity.WordsEntity" >
+    insert into cms_words (id, word_spell, word_mean, 
+      word_type, phonetic_symbol, picture_path, 
+      audio_path_m, audio_path_w, audio_path_m_uk, 
+      audio_path_w_uk, audio_path_m_us, audio_path_w_us, 
+      type, create_id, create_date, 
+      update_id, update_date, enable_flag
+      )
+    values (#{id,jdbcType=BIGINT}, #{wordSpell,jdbcType=VARCHAR}, #{wordMean,jdbcType=VARCHAR}, 
+      #{wordType,jdbcType=VARCHAR}, #{phoneticSymbol,jdbcType=VARCHAR}, #{picturePath,jdbcType=VARCHAR}, 
+      #{audioPathM,jdbcType=VARCHAR}, #{audioPathW,jdbcType=VARCHAR}, #{audioPathMUk,jdbcType=VARCHAR}, 
+      #{audioPathWUk,jdbcType=VARCHAR}, #{audioPathMUs,jdbcType=VARCHAR}, #{audioPathWUs,jdbcType=VARCHAR}, 
+      #{type,jdbcType=VARCHAR}, #{createId,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, 
+      #{updateId,jdbcType=VARCHAR}, #{updateDate,jdbcType=DATE}, #{enableFlag,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  
+  <insert id="insertSelective" parameterType="com.xuanli.oepcms.entity.WordsEntity" >
+    insert into cms_words
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="wordSpell != null" >
+        word_spell,
+      </if>
+      <if test="wordMean != null" >
+        word_mean,
+      </if>
+      <if test="wordType != null" >
+        word_type,
+      </if>
+      <if test="phoneticSymbol != null" >
+        phonetic_symbol,
+      </if>
+      <if test="picturePath != null" >
+        picture_path,
+      </if>
+      <if test="audioPathM != null" >
+        audio_path_m,
+      </if>
+      <if test="audioPathW != null" >
+        audio_path_w,
+      </if>
+      <if test="audioPathMUk != null" >
+        audio_path_m_uk,
+      </if>
+      <if test="audioPathWUk != null" >
+        audio_path_w_uk,
+      </if>
+      <if test="audioPathMUs != null" >
+        audio_path_m_us,
+      </if>
+      <if test="audioPathWUs != null" >
+        audio_path_w_us,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="createId != null" >
+        create_id,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="updateId != null" >
+        update_id,
+      </if>
+      <if test="updateDate != null" >
+        update_date,
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="wordSpell != null" >
+        #{wordSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="wordMean != null" >
+        #{wordMean,jdbcType=VARCHAR},
+      </if>
+      <if test="wordType != null" >
+        #{wordType,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneticSymbol != null" >
+        #{phoneticSymbol,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null" >
+        #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathM != null" >
+        #{audioPathM,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathW != null" >
+        #{audioPathW,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathMUk != null" >
+        #{audioPathMUk,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathWUk != null" >
+        #{audioPathWUk,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathMUs != null" >
+        #{audioPathMUs,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathWUs != null" >
+        #{audioPathWUs,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xuanli.oepcms.entity.WordsEntity" >
+    update cms_words
+    <set >
+      <if test="wordSpell != null" >
+        word_spell = #{wordSpell,jdbcType=VARCHAR},
+      </if>
+      <if test="wordMean != null" >
+        word_mean = #{wordMean,jdbcType=VARCHAR},
+      </if>
+      <if test="wordType != null" >
+        word_type = #{wordType,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneticSymbol != null" >
+        phonetic_symbol = #{phoneticSymbol,jdbcType=VARCHAR},
+      </if>
+      <if test="picturePath != null" >
+        picture_path = #{picturePath,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathM != null" >
+        audio_path_m = #{audioPathM,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathW != null" >
+        audio_path_w = #{audioPathW,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathMUk != null" >
+        audio_path_m_uk = #{audioPathMUk,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathWUk != null" >
+        audio_path_w_uk = #{audioPathWUk,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathMUs != null" >
+        audio_path_m_us = #{audioPathMUs,jdbcType=VARCHAR},
+      </if>
+      <if test="audioPathWUs != null" >
+        audio_path_w_us = #{audioPathWUs,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="createId != null" >
+        create_id = #{createId,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="updateId != null" >
+        update_id = #{updateId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateDate != null" >
+        update_date = #{updateDate,jdbcType=DATE},
+      </if>
+      <if test="enableFlag != null" >
+        enable_flag = #{enableFlag,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xuanli.oepcms.entity.WordsEntity" >
+    update cms_words
+    set word_spell = #{wordSpell,jdbcType=VARCHAR},
+      word_mean = #{wordMean,jdbcType=VARCHAR},
+      word_type = #{wordType,jdbcType=VARCHAR},
+      phonetic_symbol = #{phoneticSymbol,jdbcType=VARCHAR},
+      picture_path = #{picturePath,jdbcType=VARCHAR},
+      audio_path_m = #{audioPathM,jdbcType=VARCHAR},
+      audio_path_w = #{audioPathW,jdbcType=VARCHAR},
+      audio_path_m_uk = #{audioPathMUk,jdbcType=VARCHAR},
+      audio_path_w_uk = #{audioPathWUk,jdbcType=VARCHAR},
+      audio_path_m_us = #{audioPathMUs,jdbcType=VARCHAR},
+      audio_path_w_us = #{audioPathWUs,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      create_id = #{createId,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      update_id = #{updateId,jdbcType=VARCHAR},
+      update_date = #{updateDate,jdbcType=DATE},
+      enable_flag = #{enableFlag,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,129 @@
+#服务启动端口
+server:  
+  port: 8092
+  tomcat:
+    uri-encoding: UTF-8
+#数据库配置
+jdbc:
+  datasource:
+    name: test
+    url: jdbc:mysql://39.104.76.67:3086/oep_cms?characterEncoding=utf8&useSSL=false
+    username: test
+    password: 09)(poPO
+    # 使用druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    filters: stat
+    maxActive: 20
+    initialSize: 1
+    maxWait: 60000
+    minIdle: 1
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    poolPreparedStatements: true
+    maxOpenPreparedStatements: 20
+
+#Redis配置
+redis:
+  host: 39.104.76.67
+  port: 5379
+  password: oep-be-123!@#098)(*
+
+mybatis:
+  mapper-locations: classpath:mappers/*.xml
+  
+#spring:
+#  jackson:
+#    time-zone: GMT+8
+#    date-format: yyyy-MM-dd HH:mm:ss
+
+spring:
+  session:
+    store-type: REDIS
+    redis:
+      flush-mode: immediate
+  redis:
+    timeout: 3000
+    port: 5379
+    password: oep-be-123!@#098)(*
+    host: 39.104.76.67
+    database: 5 
+    pool:
+      max-wait: 1000
+      max-active: 2000
+      min-idle: 50
+      max-idle: 500
+  http:
+    multipart:
+      enabled: true
+      max-file-size: 500MB
+      max-request-size: 500MB
+    encoding:
+      force: true
+      enabled: true
+      charset: UTF-8
+#自定义系统的一些配置文件 
+systemconfig:
+  file:
+    base-path: d:/test/3
+    qt-url: http://39.104.76.67:8088/oep-be
+  yunzhi:
+    url: http://edu.hivoice.cn:8085/eval/mp3
+    appkey: n3nibwi4xvjsv43at5jccmq2uhgdav3suorh4lye
+  cors:
+      path: "/**"
+      allowedOrigins: "*"
+      allowedMethods: "GET,POST,PUT,DELETE,OPTIONS"
+      allowedHeaders: "*"
+      exposedHeaders: ""
+      allowCredentials: "false"
+      maxAge: 86400
+  aliOSS:
+    endpoint: http://oss-cn-huhehaote.aliyuncs.com
+    accessKeyId: LTAIVtgwtV8fPSSG
+    accessKeySecret: gWyoub5rrgPU4wh1VXNNMAooQK78o6
+    bucketName: xl-audio-file-store
+    pool:
+      #允许打开的最大HTTP连接数。默认为1024
+      maxConnections: 1024
+      #Socket层传输数据的超时时间（单位：毫秒）。默认为50000毫秒
+      socketTimeout: 50000
+      #建立连接的超时时间（单位：毫秒）。默认为50000毫秒
+      connectionTimeout: 50000
+      #从连接池中获取连接的超时时间（单位：毫秒）。默认不超时
+      connectionRequestTimeout: 120000
+      #如果空闲时间超过此参数的设定值，则关闭连接（单位：毫秒）。默认为60000毫秒
+      idleConnectionTime: 60000
+      #请求失败后最大的重试次数。默认3次
+      maxErrorRetry: 3
+      #是否支持CNAME作为Endpoint，默认支持CNAME
+      supportCname: true
+      #是否开启二级域名（Second Level Domain）的访问方式，默认不开启
+      SLDEnabled: false
+      #连接OSS所采用的协议（HTTP/HTTPS），默认为HTTP
+      protocol: HTTP
+      #用户代理，指HTTP的User-Agent头。默认为”aliyun-sdk-java”
+      userAgent: aliyun-sdk-java
+  sms:
+    regist_template: 注册验证码,验证码为:%s,验证码30分钟内有效.
+    forget_template: 正在找回密码,验证码为:%s,验证码30分钟内有效.
+    login_template: 手机验证码登录,验证码为:%s,验证码30分钟内有效.
+    action: send
+    account: 922022
+    password: 5rtwzC
+    sign: 【AI英语】
+    extno: 10690022
+    host: http://47.100.188.160:7862/sms
+# 日志输出
+logging:
+  level: 
+    root: INFO
+    org.apache: INFO
+    com.ibatis: INFO
+    com.xuanli.oepcms.mapper: DEBUG
+    com.xuanli.oepcms: DEBUG
+ 

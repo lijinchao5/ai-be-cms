@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xuanli.oepcms.mapper.HomeworkStudentScoreWordEntityMapper">
+  <resultMap id="BaseResultMap" type="com.xuanli.oepcms.entity.HomeworkStudentScoreWordEntity">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="homework_id" jdbcType="BIGINT" property="homeworkId" />
+    <result column="homework_detail_id" jdbcType="BIGINT" property="homeworkDetailId" />
+    <result column="student_id" jdbcType="BIGINT" property="studentId" />
+    <result column="score" jdbcType="DOUBLE" property="score" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="text" jdbcType="VARCHAR" property="text" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, homework_id, homework_detail_id, student_id, score, type, text
+  </sql>
+  <select id="selectById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from xl_homework_student_score_word
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteHomeworkStudentScoreWordEntity" parameterType="java.lang.Long">
+    delete from xl_homework_student_score_word
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+
+  <insert id="insertHomeworkStudentScoreWordEntity" parameterType="com.xuanli.oepcms.entity.HomeworkStudentScoreWordEntity">
+    insert into xl_homework_student_score_word
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="homeworkId != null">
+        homework_id,
+      </if>
+      <if test="homeworkDetailId != null">
+        homework_detail_id,
+      </if>
+      <if test="studentId != null">
+        student_id,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="text != null">
+        text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkId != null">
+        #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkDetailId != null">
+        #{homeworkDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        #{text,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateHomeworkStudentScoreWordEntity" parameterType="com.xuanli.oepcms.entity.HomeworkStudentScoreWordEntity">
+    update xl_homework_student_score_word
+    <set>
+      <if test="homeworkId != null">
+        homework_id = #{homeworkId,jdbcType=BIGINT},
+      </if>
+      <if test="homeworkDetailId != null">
+        homework_detail_id = #{homeworkDetailId,jdbcType=BIGINT},
+      </if>
+      <if test="studentId != null">
+        student_id = #{studentId,jdbcType=BIGINT},
+      </if>
+      <if test="score != null">
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="text != null">
+        text = #{text,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>CMS内容管理系统</title>
+<link rel="stylesheet" href="layui/css/layui.css">
+<link rel="stylesheet" href="css/main.css">
+<script src="./js/jquery.min.js"></script>
+<script src="./layer/layer.js"></script>
+<script src="./layui/layui.js"></script>
+<script src="./js/util.js"></script>
+<script src="./js/main.js"></script>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+  <div class="layui-header">
+    <div class="layui-logo">CMS内容管理系统</div>
+    <!-- 头部区域（可配合layui已有的水平导航） -->
+    <!-- <ul class="layui-nav layui-layout-left">
+      <li class="layui-nav-item"><a href="">控制台</a></li>
+      <li class="layui-nav-item"><a href="">商品管理</a></li>
+      <li class="layui-nav-item"><a href="">用户</a></li>
+      <li class="layui-nav-item">
+        <a href="javascript:;">其它系统</a>
+        <dl class="layui-nav-child">
+          <dd><a href="">邮件管理</a></dd>
+          <dd><a href="">消息管理</a></dd>
+          <dd><a href="">授权管理</a></dd>
+        </dl>
+      </li>
+    </ul> -->
+    <ul class="layui-nav layui-layout-right" id="denglu">
+      <li class="layui-nav-item"><a href="login.html">登录</a></li>
+    </ul>
+    <ul class="layui-nav layui-layout-right" id="user" style="display: none;">
+      <li class="layui-nav-item">
+        <a href="javascript:;">
+          <!-- 头像 -->
+          <!-- <img src="http://t.cn/RCzsdCq" class="layui-nav-img"> -->
+          <span id="username">用户名</span>
+        </a>
+        <dl class="layui-nav-child">
+          <dd><a href="javascript:;" id="center">个人中心</a></dd>
+          <dd><a href="javascript:;" id="tuichu">退出</a></dd>
+        </dl>
+      </li>
+    </ul>
+  </div>
+  
+  
+  <div class="layui-side layui-bg-black" id="admin" style="display: none;">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="menu">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">机构管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" contenturl="html/area/listsf.html">省份管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/area/listcs.html">城市管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/area/listqx.html">区县管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/school/list.html">学校管理</a></dd>
+          </dl>
+        </li>
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">内容管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" contenturl="html/book/booklist.html">教材管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/paper/list.html">试卷管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/question/list.html">试题管理</a></dd>
+            <dd><a href="javascript:;">话题管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/read/list.html">分级阅读</a></dd>
+            <dd><a href="javascript:;" contenturl="html/words/list.html">单词管理</a></dd>
+          </dl>
+        </li>
+        <!--<li class="layui-nav-item"><a href="javascript:;">权限管理</a></li>-->
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">基础数据</a>
+          <dl class="layui-nav-child">
+            <!--<dd><a href="javascript:;" contenturl="html/dic/list.html">数据字典</a></dd>-->
+            <dd><a href="javascript:;" contenturl="html/system/bookversion.html">教材版本</a></dd>
+            <dd><a href="javascript:;" contenturl="html/link/list.html">首页信息</a></dd>
+          </dl>
+        </li>
+        <!--<li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">示例</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" contenturl="html/demo/tabledemo.html">表格示例</a></dd>
+            <dd><a href="javascript:;">列表二</a></dd>
+          </dl>
+        </li>-->
+      </ul>
+    </div>
+  </div>
+  
+  
+  <div class="layui-side layui-bg-black" id="editor">
+    <div class="layui-side-scroll">
+      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+      <ul class="layui-nav layui-nav-tree"  lay-filter="menu">
+        <li class="layui-nav-item layui-nav-itemed">
+          <a class="" href="javascript:;">内容管理</a>
+          <dl class="layui-nav-child">
+            <dd><a href="javascript:;" contenturl="html/paper/list.html">试卷管理</a></dd>
+            <dd><a href="javascript:;" contenturl="html/read/list.html">分级阅读</a></dd>
+          </dl>
+        </li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="layui-body">
+    <!-- 内容主体区域 -->
+    <iframe id="contentIframe" src="welcome.html" style="width: 100%;"></iframe>
+  </div>
+  
+  <div class="layui-footer">
+    <!-- 底部固定区域 -->
+    <div style="text-align: center;"> ©竞业达</div>
+  </div>
+  <!--菜单折叠按钮-->
+  <div class="site-tree-mobile layui-hide">
+  	<i class="layui-icon">&#xe602;</i>
+	</div>
+	<!--菜单遮罩-->
+	<div class="layui-main-shade"></div>
+  
+</div>
+</body>
+</html>
